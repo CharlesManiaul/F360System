@@ -1,0 +1,289 @@
+﻿@{
+    ViewData["Title"] = "Questionaire Page";
+}
+
+
+@model Questionaire
+
+<div class="page-header d-print-none">
+    <div class="container-xxl">
+        <div class="row g-2 align-items-center">
+            <div class="col-6">
+                <!-- Page pre-title -->
+                <div class="page-pretitle">
+                    Details - Questionaire
+                    <h2 class="page-title">
+                        Details of Questionaire
+                    </h2>
+                </div>
+            </div>
+
+            <div class="col-auto ms-auto d-print-none">
+
+                <!-- Add Button to Open Modal -->
+                <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#CatQuestModal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-bubble-text"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 10h10" /><path d="M9 14h5" /><path d="M12.4 3a5.34 5.34 0 0 1 4.906 3.239a5.333 5.333 0 0 1 -1.195 10.6a4.26 4.26 0 0 1 -5.28 1.863l-3.831 2.298v-3.134a2.668 2.668 0 0 1 -1.795 -3.773a4.8 4.8 0 0 1 2.908 -8.933a5.33 5.33 0 0 1 4.287 -2.16" /></svg>
+                    Add
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<div class="page-body">
+    <div class="container-xxl">
+
+        <div class="card">
+            <div class="card-header d-block">
+                <h2 class="card-title">@Model.FormName </h2> 
+                <div>@Model.Remarks</div>
+            </div>
+            <table class="table text-muted table-sm" id="datatable" data-filename="Category">
+                <thead class="table-thead">
+                    <tr>
+
+
+                        <th colspan ="2">Question</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody class="table-tbody">
+                    @if (Model.QuestionDetails == null || !Model.QuestionDetails.Any())
+                    {
+                        <tr>
+                            <td colspan="3" class="text-center">NO DATA AVAILABLE</td>
+                        </tr>
+                    }
+                    @{
+                        string currentCategory = null;
+                        int categoryIndex = 0;
+
+                    }
+                    @foreach (var row in Model.QuestionDetails)
+                    {
+                        if (currentCategory != row.Category)
+                        {
+                            currentCategory = row.Category;
+                            <tr class="bg-primary-lt">
+                                <td colspan="3" class="py-2">
+                                    <strong> @row.Category</strong>
+                                </td>
+                            </tr>
+                            categoryIndex++;
+                        }
+                        <tr>
+                            <td>@row.Seq.</td>
+                            <td data-label="Question">
+                                <a type="button" class="edit-question text-decoration-none theme-text"
+                                data-category="@row.Category"
+                                data-seq="@row.Seq"
+                                data-question="@row.Questionaire"
+                                data-did="@row.DId">
+                                    @Html.Raw(row.Questionaire.Replace("\n", "<br>"))
+                                </a>
+                            </td>
+                            <!-- Delete Button with Trigger -->
+                            <td data-label="Action" class="text-nowrap">
+                                <a class="text-danger" data-bs-toggle="modal" data-bs-target="#deleteQuestionModal" data-did1="@row.DId">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M4 7l16 0" />
+                                        <path d="M10 11l0 6" />
+                                        <path d="M14 11l0 6" />
+                                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                    </svg>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+@using (Html.BeginForm("DeleteQuestionDetails", "Questionaire", FormMethod.Post, new { id = "form-delete-details" }))
+{
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteQuestionModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger" id="deleteModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this question? This action cannot be undone.
+                </div>
+
+                @Html.HiddenFor(m => m.QuestionDetail.DId, new { id = "DId1" })
+
+                    @Html.HiddenFor(m => m.HId)
+                      
+                    
+    
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger  btn-delete-question">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@using (Html.BeginForm("SaveQuestionDetails", "Questionaire", FormMethod.Post, new { id = "form-save-details" }))
+{
+    @Html.HiddenFor(m=>m.HId)
+    <!-- Modal -->
+    <div class="modal fade" id="CatQuestModal" tabindex="-1" aria-labelledby="CatQuestModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="CatQuestModalLabel">Add Category & Question</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                       @*  <select asp-for="@Model.QuestionDetail.Category" class="form-select tom-select-add" placeholder="Select or Add Category"></select> *@
+                        @Html.DropDownListFor(m => m.QuestionDetail.Category,new SelectList (Model.categories), "",new{@class="form-select tom-select-add"})
+                    </div>
+                    <div class="mb-3">
+                        <label for="sequence" class="form-label">Sequence</label>
+                        
+                        @Html.TextBoxFor(m => m.QuestionDetail.Seq, new { id = "Sequence", @class="form-control"})
+                    </div>
+                    <div class="mb-3">
+                        <label for="question" class="form-label">Question</label>
+                        @* <textarea asp-for="@Model.QuestionDetail.Questionaire" class="form-control auto-size" rows="3" placeholder="Enter Question"></textarea> *@
+                        @Html.TextAreaFor(m => m.QuestionDetail.Questionaire, new { id = "Questionaire", @class = "form-control", data_bs_toggle="autosize" })
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@using (Html.BeginForm("EditQuestionDetails", "Questionaire", FormMethod.Post, new { id = "form-edit-details" }))
+{
+    @Html.HiddenFor(m => m.HId)
+    @Html.HiddenFor(m => m.QuestionDetail.DId, new { id = "DId" })
+<!-- Modal -->
+<div class="modal fade" id="EditQuestionModal" tabindex="-1" aria-labelledby="EditQuestionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="questionModalLabel">Edit Question</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+               
+                    <div class="mb-3">
+                        <label for="Category" class="form-label">Category</label>
+                        @Html.DropDownListFor(m => m.QuestionDetail.Category, new SelectList(Model.categories), "", new { @class = "form-select ", id="Category1" })
+                    </div>
+                    <div class="mb-3">
+                        <label for="Seq" class="form-label">Sequence</label>
+                        @Html.TextBoxFor(m => m.QuestionDetail.Seq, new { id = "Sequence1", @class = "form-control" })
+                    </div>
+                    <div class="mb-3">
+                        <label for="Questionaire" class="form-label">Question</label>
+                        @Html.TextAreaFor(m => m.QuestionDetail.Questionaire, new { id = "Questionaire1", @class = "form-control", data_bs_toggle = "autosize" })
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                   
+               
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+
+@section Scripts 
+{
+    <script>
+                $(function () {
+            $('#deleteQuestionModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var did = button.data('did1');       // Extract info from data-* attribute
+
+                // Set the value in the hidden textbox
+                $('#DId1').val(did);
+            });
+        });
+    </script>
+
+<script>
+
+        
+          
+
+
+
+    $(document).ready(function () {
+    let cat1 =  new TomSelect($("#Category1")[0], {
+        copyClassesToDropdown: false,
+        dropdownParent: 'body',
+        controlInput: '<input>',
+        render: {
+            item: function (data, escape) {
+                return '<div><span class="d-block">' + escape(data.text) + '</span></div>';
+            },
+            option: function (data, escape) {
+                return '<div>' +
+                    '<span class="d-block">' + escape(data.text) + '</span>' +
+                    '<span class="d-block fs-5 opacity-70">' + escape(data.subtitle || '') + '</span>' +
+                    '<span class="d-block fs-5 opacity-70">' + escape(data.subtitle2 || '') + '</span>' +
+                    '</div>';
+            }
+        },
+        create: true, // Allows adding new items
+        createOnBlur: true // Automatically creates an item when focus is lost
+    });
+
+        $(".edit-question").on("click", function () {
+            let category = $(this).data("category");
+            let seq = $(this).data("seq");
+            let question = $(this).data("question");
+            let did = $(this).data("did");
+
+            cat1.setValue(category);
+            $("#DId").val(did);
+            $("#Sequence1").val(seq);
+            $("#Questionaire1").val(question);
+            // $("#Questionaire1").trigger('autosize');
+                 // autosize($("#Questionaire1")[0]);
+            // $("#Questionaire1").css("height", $("#Questionaire1").prop("scrollHeight"));
+            //     alert( $("#Questionaire1").prop("scrollHeight"))
+            $("#EditQuestionModal").modal("show");
+        });
+    });
+</script>
+
+
+
+}

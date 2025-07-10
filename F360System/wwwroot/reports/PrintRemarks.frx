@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="05/15/2025 11:24:53" ReportInfo.Modified="06/13/2025 16:07:30" ReportInfo.CreatorVersion="2025.1.0.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqxfki+t8jnSxof6qn6ng9vZ5pEYE2o1JpqEb/jhZ1VqvNghr98xJeMRJ6t9srCuWUjg06hlZVC6WWWPGeWxNMQZU+y3Rc13GpdFtkJbmPXq+j9cHOl/S+aOJuwkwdBK1XcIDRjMFGAdPPmkF9oR8CcnwLKRli7NaZE2JN2z4L+C558XlTndQLjMMgb1nVGspHMr4Pg4sWFBnpvz4yvDriaw==">
+      <TableDataSource Name="F360_Print_Remarks" DataType="System.Int32" Enabled="true" TableName="F360_Print_Remarks">
+        <Column Name="Name" DataType="System.String"/>
+        <Column Name="Department" DataType="System.String"/>
+        <Column Name="Category" DataType="System.String"/>
+        <Column Name="Relation" DataType="System.String"/>
+        <Column Name="Remarks" DataType="System.String"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="1047.06"/>
+    <PageHeaderBand Name="PageHeader1" Top="4" Width="1047.06" Height="94.5">
+      <TextObject Name="Text2" Top="59" Width="94.5" Height="18.9" Text="Name:" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text1" Left="66.15" Top="59" Width="349.65" Height="18.9" Text="[F360_Print_Remarks.Name]" Font="Arial, 10pt"/>
+      <TextObject Name="Text3" Left="378.45" Top="59" Width="151.2" Height="18.9" Text="[F360_Print_Remarks.Department]" Font="Arial, 10pt"/>
+      <TextObject Name="Text11" Left="299.85" Top="59" Width="94.5" Height="18.9" Text="Department:" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text10" Left="349.65" Width="321.3" Height="28.35" Text="360 FEEDBACK Remarks" HorzAlign="Center" Font="Arial, 16pt, style=Bold"/>
+    </PageHeaderBand>
+    <GroupHeaderBand Name="GroupHeader1" Top="102.5" Width="1047.06" Height="42.8" Condition="[F360_Print_Remarks.Category]">
+      <TextObject Name="Text4" Width="614.25" Height="33.35" Text="[[F360_Print_Remarks.Category]]" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <GroupHeaderBand Name="GroupHeader2" Top="149.3" Width="1047.06" Height="28.35" Condition="[F360_Print_Remarks.Relation]">
+        <TextObject Name="Text8" Top="3" Width="614.25" Height="18.9" Text="[[F360_Print_Remarks.Relation]]" Font="Arial, 12pt"/>
+        <DataBand Name="Data1" Top="181.65" Width="1047.06" Height="37.8" DataSource="F360_Print_Remarks">
+          <TextObject Name="Text9" Left="9.45" Width="1030.05" Height="37.8" Text="- [F360_Print_Remarks.Remarks]" VertAlign="Center" Font="Arial, 11pt"/>
+        </DataBand>
+        <GroupFooterBand Name="GroupFooter2" Top="223.45" Width="1047.06"/>
+      </GroupHeaderBand>
+      <GroupFooterBand Name="GroupFooter1" Top="227.45" Width="1047.06"/>
+    </GroupHeaderBand>
+    <PageFooterBand Name="PageFooter1" Top="231.45" Width="1047.06"/>
+  </ReportPage>
+</Report>

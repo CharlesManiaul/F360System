@@ -1,0 +1,106 @@
+﻿@{
+    ViewData["Title"] = "Ratee Details Page";
+    string currentCategory = "";
+    int categoryIndex = 0;
+}
+@model EvalResult
+
+<div class="page-header d-print-none">
+    <div class="container-xxl">
+        <div class="row g-2 align-items-center">
+            <div class="col">
+                <div class="page-pretitle">Details - Ratee</div>
+                <h2 class="page-title">Rating</h2>
+            </div>
+            <div class="col-auto ms-auto d-print-none">
+                <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#questionModal">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M7 10h10" />
+                        <path d="M9 14h5" />
+                        <path d="M12.4 3a5.34 5.34 0 0 1 4.906 3.239a5.333 5.333 0 0 1 -1.195 10.6a4.26 4.26 0 0 1 -5.28 1.863l-3.831 2.298v-3.134a2.668 2.668 0 0 1 -1.795 -3.773a4.8 4.8 0 0 1 2.908 -8.933a5.33 5.33 0 0 1 4.287 -2.16" />
+                    </svg>
+                    Add
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-body">
+    <div class="container-xxl">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h3 class="card-title">@Model.EmpName.ToUpper()</h3>
+            </div>
+        </div>
+
+        @if (Model.evalRatings == null || !Model.evalRatings.Any())
+        {
+            <div class="card">
+                <div class="card-body text-center">
+                    <p class="text-muted mb-0">NO DATA AVAILABLE</p>
+                </div>
+            </div>
+        }
+        else
+        {
+            foreach (var group in Model.evalRatings.GroupBy(m => m.Category))
+            {
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3 class="card-title">@group.Key</h3>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table card-table table-vcenter">
+                            <thead>
+                                <tr>
+                                    <th style="width: 5%">#</th>
+                                    <th>Question</th>
+                                    <th style="width: 15%">Rating</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in group)
+                                {
+                                    <tr>
+                                        <td>@item.Seq.</td>
+                                        <td>
+                                            <span>@Html.Raw(item.Questionaire.Replace("\n", "<br />"))</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-blue-lt fw-bold">@item.Rate</span>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    @if (Model.evalRemarks != null && Model.evalRemarks.Count > categoryIndex)
+                    {
+                        <div class="px-4 pb-4">
+                            <label class="form-label fw-bold mt-3">Remarks for @group.Key</label>
+                            <textarea class="form-control bg-light" rows="3" readonly>@Model.evalRemarks[categoryIndex].Remarks</textarea>
+                        </div>
+                    }
+
+                    @{
+                        categoryIndex++;
+                    }
+                </div>
+            }
+
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h3 class="card-title">Overall Remarks</h3>
+                </div>
+                <div class="card-body">
+                    <textarea class="form-control bg-light" rows="4" readonly>@Model.OverRemarks</textarea>
+                </div>
+            </div>
+        }
+    </div>
+</div>

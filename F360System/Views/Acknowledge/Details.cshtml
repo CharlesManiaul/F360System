@@ -1,0 +1,338 @@
+﻿@{
+    ViewData["Title"] = "Mapping Page";
+}
+
+
+@model Acknowledge
+
+<div class="page-header d-print-none">
+    <div class="container-xxl">
+        <div class="row g-2 align-items-center">
+            <div class="col-6">
+                <!-- Page pre-title -->
+                <div class="page-pretitle">
+                    Index - Acknowledgement
+                    <h2 class="page-title">
+                        Acknowledgement Result
+                    </h2>
+                </div>
+            </div>
+
+            <div class="col-auto ms-auto d-print-none">
+                @if (Model.AcknowledgeStatus == "For Discussion" && Model.AcknowledgeBy == User.Identity.Name)
+                {
+                    <!-- Add Button to Open Modal -->
+                    <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#CloseAcknowledge">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-bubble-text"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 10h10" /><path d="M9 14h5" /><path d="M12.4 3a5.34 5.34 0 0 1 4.906 3.239a5.333 5.333 0 0 1 -1.195 10.6a4.26 4.26 0 0 1 -5.28 1.863l-3.831 2.298v-3.134a2.668 2.668 0 0 1 -1.795 -3.773a4.8 4.8 0 0 1 2.908 -8.933a5.33 5.33 0 0 1 4.287 -2.16" /></svg>
+                        Closed Acknowledgement
+                    </a>
+                }
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="page-body">
+    <div class="container-xxl">
+        <div class="row">
+            <div class="col-lg-12 mb-3">
+                @using (Html.BeginForm("SubmitRemarks", "Acknowledge", FormMethod.Post, new { id = "form-update" }))
+                {
+                    @Html.HiddenFor(m => m.EVId)
+
+                    string className = "bg-secondary-lt";
+                    if (Model.AcknowledgeStatus == "Ongoing") className = "bg-danger-lt";
+                    if (Model.AcknowledgeStatus.Contains("For Discussion")) className = "bg-warning-lt";
+                    if (Model.AcknowledgeStatus.Contains("Completed")) className = "bg-success-lt";
+
+                    <div class="card" id="main-card">
+                        <div class="card-header d-flex">
+                            <div>
+                                <h3 class="card-title">@Model.EmpName</h3>
+                                <span class="fs-5 opacity-90"> Date From: @Model.DateFrom</span>
+                                <span class="fs-5 opacity-90">Date To: @Model.DateTo</span>
+                            </div>
+                            <span class="badge ms-auto @className">@Model.AcknowledgeStatus</span>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        Recommendation / Development Path
+                                    </label>
+                                    @Html.TextAreaFor(m => m.AcknowledgeRemarks, new { @class = "form-control autosize", required = "required", id = "AcknowledgeRemarks" })
+                                </div>
+
+                                @if (!string.IsNullOrWhiteSpace(Model.ConfirmRemarks))
+                                {
+                                    <div class="mb-3">
+                                        <label class="form-label">Employee Comment</label>
+                                        @Html.TextAreaFor(m => m.ConfirmRemarks, new { @class = "form-control autosize", required = "required", id = "ConfirmRemarks" })
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+
+                        <div class="card-footer text-end">
+                            @if (@* Model.AcknowledgeStatus == "Pending"   *@Model.AcknowledgeBy == User.Identity.Name)
+                            {
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="ti ti-check"></i> Submit
+                                </button>
+                            }
+                        </div>
+                    </div>
+                }
+
+
+                <div class="card shadow-sm rounded-3">
+                    <div class="card-header border-bottom-0 pb-0">
+                        <ul class="nav nav-tabs nav-bordered px-2" data-bs-toggle="tabs">
+                            <li class="nav-item">
+                                <a href="#tab-rating" class="nav-link active d-flex align-items-center gap-1" data-bs-toggle="tab">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chart-bar" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M3 12v-3a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v3" />
+                                        <path d="M9 12v-6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v6" />
+                                        <path d="M15 12v-2a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v2" />
+                                        <path d="M4 12h16" />
+                                    </svg>
+                                    Rating
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#tab-remarks" class="nav-link d-flex align-items-center gap-1" data-bs-toggle="tab">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message-report" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M11 12h2" />
+                                        <path d="M12 9v2" />
+                                        <path d="M12 15v.01" />
+                                        <path d="M4 20h4l4 -4h8a1 1 0 0 0 1 -1v-10a1 1 0 0 0 -1 -1h-14a1 1 0 0 0 -1 1v14" />
+                                    </svg>
+                                    Remarks
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="card-body tab-content border-top pt-3">
+
+                        <!-- 🟩 Rating Tab -->
+                        <div class="tab-pane fade show active" id="tab-rating">
+
+                            <!-- ✅ Overall Average Row -->
+                            <div class="mb-4">
+                                <h4 class="text-success">Overall Average Score</h4>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered text-center align-middle">
+                                        <thead class="bg-light">
+                                            <tr>
+                                                <th>Head</th>
+                                                <th>Peers</th>
+                                                <th>Customer</th>
+                                                <th>DR</th>
+                                                <th>Self</th>
+                                                @* <th>All</th> *@
+                                                <th>Average(No Self)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="fw-bold">
+                                                <td>@Model.Overall.AvgHead.ToString("0.00")</td>
+                                                <td>@Model.Overall.AvgPeers.ToString("0.00")</td>
+                                                <td>@Model.Overall.AvgCustomer.ToString("0.00")</td>
+                                                <td>@Model.Overall.AvgDR.ToString("0.00")</td>
+                                                <td>@Model.Overall.AvgSelf.ToString("0.00")</td>
+                                                @* <td>@Model.Overall.AvgAllGroup.ToString("0.00")</td> *@
+                                                <td>@Model.Overall.AvgNoSelfGroup.ToString("0.00")</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- ✅ Per Category Table -->
+                            @foreach (var category in Model.printRate)
+                            {
+                                <div class="mb-4">
+                                    <h4 class="mb-3 text-primary">@category.Category</h4>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered text-center align-middle">
+                                            <thead class="bg-light">
+                                                <tr>
+                                                    <th class="text-start">Criteria</th>
+                                                    <th>Head</th>
+                                                    <th>Peers</th>
+                                                    <th>Customer</th>
+                                                    <th>DR</th>
+                                                    <th>Self</th>
+                                                    @* <th>All</th> *@
+                                                    <th>Average(No Self)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in category.Items)
+                                                {
+                                                    <tr>
+                                                        <td class="text-start">@item.Questionaire</td>
+                                                        <td>@item.Head.ToString("0.00")</td>
+                                                        <td>@item.Peers.ToString("0.00")</td>
+                                                        <td>@item.InternalCustomer.ToString("0.00")</td>
+                                                        <td>@item.DirectReport.ToString("0.00")</td>
+                                                        <td>@item.Self.ToString("0.00")</td>
+                                                        @* <td class="fw-bold">@item.AvgAll.ToString("0.00")</td> *@
+                                                        <td class="fw-bold">@item.AvgNS.ToString("0.00")</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                            <tfoot class="bg-light fw-bold">
+                                                <tr>
+                                                    <td class="text-start">Average</td>
+                                                    <td>@category.AvgHead.ToString("0.00")</td>
+                                                    <td>@category.AvgPeers.ToString("0.00")</td>
+                                                    <td>@category.AvgCustomer.ToString("0.00")</td>
+                                                    <td>@category.AvgDR.ToString("0.00")</td>
+                                                    <td>@category.AvgSelf.ToString("0.00")</td>
+                                                    @* <td>@category.AvgAllGroup.ToString("0.00")</td> *@
+                                                    <td>@category.AvgNoSelfGroup.ToString("0.00")</td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+
+                        <!-- 🟦 Remarks Tab -->
+                        <div class="tab-pane fade" id="tab-remarks">
+                            @foreach (var group in Model.GroupedRemarks)
+                            {
+                                <div class="mb-4">
+                                    <h4 class="text-primary">@group.Category</h4>
+
+                                    @foreach (var sub in group.SubGroups)
+                                    {
+                                        <h5 class="text-secondary ms-3">@sub.Relation</h5>
+
+                                        <div class="table-responsive ms-4">
+                                            <table class="table align-middle">
+                                                <tbody>
+                                                    @foreach (var r in sub.Remarks)
+                                                    {
+                                                        <tr>
+                                                            <td>@r.Remarks</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("ConfirmIdentity", "Acknowledge", FormMethod.Post, new { id = "form-add-remarks" }))
+{
+    <!-- Acknowledge Remarks Modal -->
+    <div class="modal fade" id="CloseAcknowledge" tabindex="-1" aria-labelledby="AddRemarksLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- Change action URL accordingly -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="AddRemarksLabel">Direct Report</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="ConfirmRemarks" class="form-label">Employee Comment</label>
+                        @Html.TextAreaFor(m => m.Confirm.ConfirmRemarks, new { @class = "form-control autosize", rows = "3" })
+                    </div>
+                    <div class="mb-3">
+                        <label for="UserId" class="form-label">USER ID</label>
+                       
+                        @Html.TextBoxFor(m => m.Confirm.UserId, new { @class = "form-control", required = "true" })
+                    </div>
+                    <div class="mb-3">
+                        <label for="Password" class="form-label">Password</label>
+                      
+                        @Html.TextBoxFor(m => m.Confirm.password, new { @class = "form-control", required = "true", type = "password"})
+                    </div>
+
+                    @Html.HiddenFor(m => m.AcknowledgeRemarks, new { id = "AcknowledgeRemarks1" })
+
+                    @Html.HiddenFor(m => m.EVId)
+
+
+                    <!-- Acknowledgment Note -->
+                    <div class="text-muted small mt-3">
+                        Note: By inputting my 360 username & credentials, I acknowledge that the content of this evaluation was reviewed and discussed with me. I understand that this evaluation reflects my performance during the specified period and that the feedback provided is intended to support my growth and development.
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section Scripts
+{
+
+    <script>
+        $(document).on('click', '.open-remarks-modal', function () {
+            var evid = $(this).data('evid');
+            $('#EVId').val(evid);
+        });
+    </script>
+
+
+
+    <script>
+        $(document).ready(function () {
+            $('[data-bs-target="#CloseAcknowledge"]').on('click', function () {
+                let remarks = $('#AcknowledgeRemarks').val();
+                $('#AcknowledgeRemarks1').val(remarks);
+            });
+        });
+    </script>
+
+
+
+
+    <script>
+        $(document).on('input', '.autosize', function () {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+
+        $(window).on('load', function () {
+            $('.autosize').each(function () {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            });
+        });
+    </script>
+
+}

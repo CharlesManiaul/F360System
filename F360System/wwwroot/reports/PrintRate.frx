@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="05/15/2025 17:57:33" ReportInfo.Modified="05/19/2025 15:51:53" ReportInfo.CreatorVersion="2025.1.0.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqxfki+t8jnSxof6qn6ng9vZ5pEYE2o1JpqEb/jhZ1VqvNghr98xJeMRJ6t9srCuWUjg06hlZVC6WWWPGeWxNMQZU+y3Rc13GpdFtkJbmPXq+j9cHOl/S+aOJuwkwdBK1XcIDRjMFGAdPPmkF9oR8CcnwLKRli7NaZE2JN2z4L+C558XlTndQLjMMgb1nVGspH/1zl49r8DysdZz9pjP8YoQ==">
+      <TableDataSource Name="F360_Print_Rate" DataType="System.Int32" Enabled="true" TableName="F360_Print_Rate" SelectCommand="	SELECT *, (Select AVG(Head) From F360_Print_Rate where Category = a.Category)as AvgHead, &#13;&#10;	(Select AVG(Peers) From F360_Print_Rate where Category = a.Category) as AvgPeers,&#13;&#10;	(Select AVG(InternalCustomer) From F360_Print_Rate where Category = a.Category) as AvgCustomer,&#13;&#10;	(Select AVG(DirectReport) From F360_Print_Rate where Category = a.Category) as AvgDR,&#13;&#10;	(Select AVG(Self) From F360_Print_Rate where Category = a.Category) as AvgSelf,&#13;&#10;	(Select AVG(AvgAll) From F360_Print_Rate where Category = a.Category) as rAvgAll,&#13;&#10;	(Select AVG(AvgNS) From F360_Print_Rate where Category = a.Category) as rAvgNS&#13;&#10;	FROM F360_Print_Rate a">
+        <Column Name="FormName" DataType="System.String"/>
+        <Column Name="Name" DataType="System.String"/>
+        <Column Name="DepName" DataType="System.String"/>
+        <Column Name="Category" DataType="System.String"/>
+        <Column Name="Seq" DataType="System.Int32"/>
+        <Column Name="Questionaire" DataType="System.String"/>
+        <Column Name="Head" DataType="System.Decimal"/>
+        <Column Name="Peers" DataType="System.Decimal"/>
+        <Column Name="InternalCustomer" DataType="System.Decimal"/>
+        <Column Name="DirectReport" DataType="System.Decimal"/>
+        <Column Name="Self" DataType="System.Decimal"/>
+        <Column Name="AvgAll" DataType="System.Decimal"/>
+        <Column Name="AvgNS" DataType="System.Decimal"/>
+        <Column Name="AvgHead" DataType="System.Decimal"/>
+        <Column Name="AvgPeers" DataType="System.Decimal"/>
+        <Column Name="AvgCustomer" DataType="System.Decimal"/>
+        <Column Name="AvgDR" DataType="System.Decimal"/>
+        <Column Name="AvgSelf" DataType="System.Decimal"/>
+        <Column Name="rAvgAll" DataType="System.Decimal"/>
+        <Column Name="rAvgNS" DataType="System.Decimal"/>
+      </TableDataSource>
+      <TableDataSource Name="Table" Alias="AvgOver" DataType="System.Int32" Enabled="true" SelectCommand="SELECT &#13;&#10;    CAST(AVG(Head) AS DECIMAL(10,2)) AS Head, &#13;&#10;    CAST(AVG(Self) AS DECIMAL(10,2)) AS Self,&#13;&#10;    CAST(AVG(Peers) AS DECIMAL(10,2)) AS Peers,&#13;&#10;	CAST(AVG(InternalCustomer) AS DECIMAL(10,2)) AS InternalCustomer,&#13;&#10;	CAST(AVG(DirectReport) AS DECIMAL(10,2)) AS DirectReport,&#13;&#10;&#13;&#10;    CAST(AVG(AvgAll) AS DECIMAL(10,2)) AS AvgAll, &#13;&#10;    CAST(AVG(AvgNS) AS DECIMAL(10,2)) AS AvgNS&#13;&#10;FROM F360_Print_Rate;&#13;&#10;">
+        <Column Name="Head" DataType="System.Decimal"/>
+        <Column Name="DirectReport" DataType="System.Decimal"/>
+        <Column Name="Peers" DataType="System.Decimal"/>
+        <Column Name="Self" DataType="System.Decimal"/>
+        <Column Name="AvgAll" DataType="System.Decimal"/>
+        <Column Name="AvgNS" DataType="System.Decimal"/>
+        <Column Name="InternalCustomer" DataType="System.Decimal"/>
+      </TableDataSource>
+      <TableDataSource Name="Table1" Alias="AvgCategory" DataType="System.Int32" Enabled="true" SelectCommand="SELECT &#13;&#10;    Category,&#13;&#10;    CAST(AVG(Head) AS DECIMAL(10,2)) AS Head, &#13;&#10;    CAST(AVG(Peers) AS DECIMAL(10,2)) AS Peers,&#13;&#10;	CAST(AVG(InternalCustomer) AS DECIMAL(10,2)) AS InternalCustomer,&#13;&#10;	CAST(AVG(DirectReport) AS DECIMAL(10,2)) AS DirectReport,&#13;&#10;	  CAST(AVG(Self) AS DECIMAL(10,2)) AS Self,&#13;&#10;    CAST(AVG(AvgAll) AS DECIMAL(10,2)) AS AvgAll, &#13;&#10;    CAST(AVG(AvgNS) AS DECIMAL(10,2)) AS AvgNS&#13;&#10;FROM F360_Print_Rate&#13;&#10;GROUP BY Category;">
+        <Column Name="Category" DataType="System.String"/>
+        <Column Name="Head" DataType="System.Decimal"/>
+        <Column Name="Peers" DataType="System.Decimal"/>
+        <Column Name="InternalCustomer" DataType="System.Decimal"/>
+        <Column Name="DirectReport" DataType="System.Decimal"/>
+        <Column Name="Self" DataType="System.Decimal"/>
+        <Column Name="AvgAll" DataType="System.Decimal"/>
+        <Column Name="AvgNS" DataType="System.Decimal"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Total Name="AvgHead" TotalType="Avg" Expression="[F360_Print_Rate.Head]" Evaluator="Data1"/>
+    <Total Name="AvgPeers" TotalType="Avg" Expression="[F360_Print_Rate.Peers]" Evaluator="Data1"/>
+    <Total Name="AvgCustomer" TotalType="Avg" Expression="[F360_Print_Rate.InternalCustomer]" Evaluator="Data1"/>
+    <Total Name="AvgDR" TotalType="Avg" Expression="[F360_Print_Rate.DirectReport]" Evaluator="Data1"/>
+    <Total Name="AvgSelf" TotalType="Avg" Expression="[F360_Print_Rate.Self]" Evaluator="Data1"/>
+    <Total Name="AvgAll" TotalType="Avg" Expression="[F360_Print_Rate.AvgAll]" Evaluator="Data1"/>
+    <Total Name="AvgNS" TotalType="Avg" Expression="[F360_Print_Rate.AvgNS]" Evaluator="Data1"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="1047.06"/>
+    <PageHeaderBand Name="PageHeader1" Top="4" Width="1047.06" Height="50.15" CanShrink="true">
+      <TextObject Name="Text27" Left="387.45" Top="9.45" Width="226.8" Height="18.9" Text="FEEDBACK 360 RATING" HorzAlign="Center" VertAlign="Center" Font="Arial, 11pt, style=Bold"/>
+      <TextObject Name="Text34" Left="623.7" Top="31.25" Width="94.5" Height="18.9" Border.Lines="All" Text="Customer" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+      <TextObject Name="Text35" Left="434.7" Top="31.25" Width="94.5" Height="18.9" Border.Lines="All" Text="Head" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+      <TextObject Name="Text36" Left="529.2" Top="31.25" Width="94.5" Height="18.9" Border.Lines="All" Text="Peers" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+      <TextObject Name="Text37" Left="718.2" Top="31.25" Width="94.5" Height="18.9" Border.Lines="All" Text="DR" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+      <TextObject Name="Text38" Left="812.7" Top="31.25" Width="94.5" Height="18.9" Border.Lines="All" Text="Self" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+      <TextObject Name="Text39" Left="907.2" Top="30.8" Width="66.15" Height="18.9" Border.Lines="All" Text="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+      <TextObject Name="Text40" Left="973.35" Top="30.8" Width="66.15" Height="18.9" Border.Lines="All" Text="No Self" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+      <TextObject Name="Text4" Left="207.9" Top="29.35" Width="207.9" Height="18.9" Text="[F360_Print_Rate.DepName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text2" Top="28.35" Width="189" Height="18.9" Text="[[F360_Print_Rate.Name]]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+    </PageHeaderBand>
+    <GroupHeaderBand Name="GroupHeader1" Top="58.15" Width="1047.06" Height="20.9" Condition="[F360_Print_Rate.Name]">
+      <TextObject Name="Text5" Left="0.45" Top="-0.3" Width="434.7" Height="20.9" Border.Lines="All" Text="Overall Ratings" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text47" Left="434.7" Width="94.5" Height="20.9" Border.Lines="Left, Right, Bottom" Text="[AvgOver.Head]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 12pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text48" Left="529.2" Width="94.5" Height="20.9" Border.Lines="Left, Right, Bottom" Text="[AvgOver.Peers]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 12pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text49" Left="623.7" Width="94.5" Height="20.9" Border.Lines="Left, Right, Bottom" Text="[AvgOver.InternalCustomer]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 12pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text50" Left="718.2" Width="94.5" Height="20.9" Border.Lines="Left, Right, Bottom" Text="[AvgOver.DirectReport]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 12pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text51" Left="812.7" Width="94.5" Height="20.9" Border.Lines="Left, Right, Bottom" Text="[AvgOver.Self]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 12pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text52" Left="907.2" Width="66.15" Height="20.9" Border.Lines="Left, Right, Bottom" Text="[AvgOver.AvgAll]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 12pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text53" Left="973.35" Width="66.15" Height="20.9" Border.Lines="Left, Right, Bottom" Text="[AvgOver.AvgNS]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 12pt" Trimming="EllipsisCharacter"/>
+      <GroupHeaderBand Name="GroupHeader2" Top="83.05" Width="1047.06" Height="28.9" Condition="[F360_Print_Rate.Category]">
+        <TextObject Name="Text3" Left="0.45" Width="434.7" Height="28.35" Border.Lines="Left, Right, Bottom" Text="[[F360_Print_Rate.Category]]" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text11" Left="434.7" Width="94.5" Height="28.35" Border.Lines="Left, Right, Bottom" Text="[F360_Print_Rate.AvgHead]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+        <TextObject Name="Text12" Left="812.7" Width="94.5" Height="28.35" Border.Lines="Left, Right, Bottom" Text="[F360_Print_Rate.AvgSelf]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+        <TextObject Name="Text13" Left="718.2" Width="94.5" Height="28.35" Border.Lines="Left, Right, Bottom" Text="[F360_Print_Rate.AvgDR]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+        <TextObject Name="Text14" Left="623.7" Width="94.5" Height="28.35" Border.Lines="Left, Right, Bottom" Text="[F360_Print_Rate.AvgCustomer]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+        <TextObject Name="Text15" Left="529.2" Width="94.5" Height="28.35" Border.Lines="Left, Right, Bottom" Text="[F360_Print_Rate.AvgPeers]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+        <TextObject Name="Text45" Left="907.2" Width="66.15" Height="27.9" Border.Lines="Left, Right, Bottom" Text="[F360_Print_Rate.rAvgAll]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+        <TextObject Name="Text46" Left="973.35" Width="66.15" Height="27.9" Border.Lines="Left, Right, Bottom" Text="[F360_Print_Rate.rAvgNS]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+        <DataBand Name="Data1" Top="115.95" Width="1047.06" Height="103.95" DataSource="F360_Print_Rate">
+          <TextObject Name="Text16" Left="434.7" Top="-0.55" Width="94.5" Height="104.5" Border.Lines="Left, Right, Bottom" Text="[F360_Print_Rate.Head]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 12pt" Trimming="EllipsisCharacter"/>
+          <TextObject Name="Text17" Left="529.2" Top="-0.55" Width="94.5" Height="104.5" Border.Lines="Left, Right, Bottom" Text="[F360_Print_Rate.Peers]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 12pt" Trimming="EllipsisCharacter"/>
+          <TextObject Name="Text19" Left="623.7" Top="-0.55" Width="94.5" Height="104.5" Border.Lines="Left, Right, Bottom" Text="[F360_Print_Rate.InternalCustomer]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 12pt" Trimming="EllipsisCharacter"/>
+          <TextObject Name="Text21" Left="718.2" Top="-0.55" Width="94.5" Height="104.5" Border.Lines="Left, Right, Bottom" Text="[F360_Print_Rate.DirectReport]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 12pt" Trimming="EllipsisCharacter"/>
+          <TextObject Name="Text23" Left="812.7" Top="-0.55" Width="94.5" Height="104.5" Border.Lines="Left, Right, Bottom" Text="[F360_Print_Rate.Self]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 12pt" Trimming="EllipsisCharacter"/>
+          <TextObject Name="Text26" Width="434.7" Height="103.95" Border.Lines="Left, Right, Bottom" Text="[F360_Print_Rate.Questionaire]" VertAlign="Center" Font="Arial, 11pt"/>
+          <TextObject Name="Text41" Left="907.2" Top="-1" Width="66.15" Height="104.95" Border.Lines="Left, Right, Bottom" Text="[F360_Print_Rate.AvgAll]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 12pt, style=Bold" Trimming="EllipsisCharacter"/>
+          <TextObject Name="Text42" Left="973.35" Top="-1" Width="66.15" Height="104.95" Border.Lines="Left, Right, Bottom" Text="[F360_Print_Rate.AvgNS]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 12pt, style=Bold" Trimming="EllipsisCharacter"/>
+        </DataBand>
+        <GroupFooterBand Name="GroupFooter2" Top="223.9" Width="1047.06"/>
+      </GroupHeaderBand>
+      <GroupFooterBand Name="GroupFooter1" Top="227.9" Width="1047.06"/>
+    </GroupHeaderBand>
+    <PageFooterBand Name="PageFooter1" Top="231.9" Width="1047.06"/>
+  </ReportPage>
+</Report>

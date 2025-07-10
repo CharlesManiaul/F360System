@@ -1,0 +1,426 @@
+﻿@{
+    ViewData["Title"] = "Mapping Page";
+}
+
+
+@model Mapping
+
+<div class="page-header d-print-none">
+    <div class="container-xxl">
+        <div class="row g-2 align-items-center">
+            <div class="col-6">
+                <!-- Page pre-title -->
+                <div class="page-pretitle">
+                    Index - Mapping
+                    <h2 class="page-title">
+                        Mapping Employees
+                    </h2>
+                </div>
+            </div>
+
+            <div class="col-auto ms-auto d-print-none">
+
+                <!-- Add Button to Open Modal -->
+                <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mapEmployeeModal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-bubble-text"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 10h10" /><path d="M9 14h5" /><path d="M12.4 3a5.34 5.34 0 0 1 4.906 3.239a5.333 5.333 0 0 1 -1.195 10.6a4.26 4.26 0 0 1 -5.28 1.863l-3.831 2.298v-3.134a2.668 2.668 0 0 1 -1.795 -3.773a4.8 4.8 0 0 1 2.908 -8.933a5.33 5.33 0 0 1 4.287 -2.16" /></svg>
+                    Add
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<div class="page-body">
+    <div class="container-xxl ">
+        <div class="card">
+            <div id="table-default">
+                <div class="col- d-lg-flex px-3 pt-3">
+
+                    <div class="d-flex text-center text-lg-start mb-3">
+                        <div class="text-muted">
+                            Show
+                            <div class="mx-2 d-inline-block w-25">
+                                <input id="entries" type="number" class="form-control" value="10" autocomplete="off">
+                            </div>
+                            entries
+                        </div>
+
+                    </div>
+
+                    <div class="input-icon mb-3 ms-auto">
+                        <input type="search" class="search form-control" placeholder="Search">
+                        <span class="input-icon-addon">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
+                        </span>
+
+                    </div>
+                </div>
+                <hr class="m-0">
+
+                <div class="table-responsive">
+                    <table class="table text-muted table-mobile-sm" id="datatable" data-filename="Category">
+                        <thead class="table-thead">
+                            <tr>
+
+                                <th><button class="table-sort" data-sort="sort-evid">Evaluation ID</button></th>
+                                <th><button class="table-sort" data-sort="sort-description">Description</button></th>
+                                <th><button class="table-sort" data-sort="sort-eid">Employee ID</button></th>
+                                <th><button class="table-sort" data-sort="sort-empname">Employee Name</button></th>
+                                <th><button class="table-sort" data-sort="sort-datefrom">Date From</button></th>
+                                <th><button class="table-sort" data-sort="sort-dateto">Date To</button></th>
+                                <th><button class="table-sort" data-sort="sort-deadline">Deadline</button></th>
+                                <th><button class="table-sort" data-sort="sort-remarks">Remarks</button></th>
+                                <th><button class="table-sort" data-sort="sort-ack">Acknowledge By</button></th>
+                                <th>Action</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody class="table-tbody">
+                            @if (Model.map == null || !Model.map.Any())
+                            {
+                                <tr>
+                                    <td colspan="9" class="text-center">NO DATA AVAILABLE</td>
+                                </tr>
+                            }
+                            @foreach (var row in Model.map)
+                            {
+                                <tr>
+
+
+                                    <td data-label="Evaluation ID" class="text-nowrap sort-evid">
+                                        <a href="/Mapping/Details/@row.EVId" class="text-decoration-none theme-text">@row.EVId</a>
+                                    </td>
+                                    <td data-label="Description" class="text-nowrap sort-description">
+                                        <a href="/Mapping/Details/@row.EVId" class="text-decoration-none theme-text">@row.Description</a>
+                                    </td>
+
+                                    <td data-label="Employee ID" class="text-nowrap sort-eid">
+                                        <a href="/Mapping/Details/@row.EVId" class="text-decoration-none theme-text">@row.EId</a>
+                                    </td>
+                                    <td data-label="Employee Name" class="text-nowrap sort-empname">
+                                        <a href="/Mapping/Details/@row.EVId" class="text-decoration-none theme-text">@row.EmpName</a>
+                                    </td>
+                                    <td data-label="Date From" class="text-nowrap sort-datefrom">
+                                        <a href="/Mapping/Details/@row.EVId" class="text-decoration-none theme-text">
+                                            @row.DateFrom.ToString("MM/dd/yyyy")
+                                        </a>
+                                    </td>
+                                    <td data-label="Date To" class="text-nowrap sort-dateto">
+                                        <a href="/Mapping/Details/@row.EVId" class="text-decoration-none theme-text">
+                                            @row.DateTo.ToString("MM/dd/yyyy")
+                                        </a>
+                                    </td>
+
+                                    <td data-label="Deadline" class="text-nowrap sort-deadline">
+                                        <a href="/Mapping/Details/@row.EVId" class="text-decoration-none theme-text">
+                                            @row.DeadLine.ToString("MM/dd/yyyy")
+                                        </a>
+                                    </td>
+
+                                    <td data-label="Remarks" class="text-nowrap sort-remarks">
+                                        <a href="/Mapping/Details/@row.EVId" class="text-decoration-none theme-text">@row.Remarks</a>
+                                    </td>
+
+                                    <td data-label="Acknowledge by" class="text-nowrap sort-ack">
+                                        <a href="/Mapping/Details/@row.EVId" class="text-decoration-none theme-text">@row.AcknowledgeName</a>
+                                    </td>
+
+
+
+                                    <td data-label="Action" class="text-nowrap">
+                                        <a type="button" class="btn btn-danger btn-icon" data-evid="@row.EVId" data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
+                                        </a>
+
+
+                                        <a type="button" class="btn btn-success btn-icon edit-btn" data-bs-toggle="modal" data-bs-target="#editEmployeeModal"
+                                           data-evid="@row.EVId"
+                                           data-description="@row.Description"
+                                           data-eid="@row.EId"
+                                           data-empname="@row.EmpName"
+                                           data-datefrom="@row.DateFrom"
+                                           data-dateto="@row.DateTo"
+                                           data-deadline="@row.DeadLine"
+                                           data-remarks="@row.Remarks"
+                                           data-acknowledgeby = "@row.AcknowledgeBy">
+                                            EDIT
+                                        </a>
+                                    </td>
+
+
+
+
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-footer d-flex align-items-center">
+                    <ul class="pagination m-0 ms-auto"></ul>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@using (Html.BeginForm("AddEvalHeader", "Mapping", FormMethod.Post, new { id = "form-add-header" }))
+{
+    <!-- Modal -->
+    <div class="modal fade" id="mapEmployeeModal" tabindex="-1" aria-labelledby="mapEmployeeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mapEmployeeModalLabel">Map Employee</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label for="employee" class="form-label">Employee</label>
+
+                        <select id="EId" class="form-select tom-select-subtitle" asp-for="EId" required>
+                            <option value="" disabled selected>Select Employee</option>
+                            @foreach (var item in Model.EmpList)
+                            {
+                                <option value="@item.EId" data-subtitle="@item.EId">@item.EmpName</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="header" class="form-label">Header</label>
+
+                        <select id="HId" class="form-select tom-select" asp-for="HId" required>
+                            <option value="" disabled selected>Select Employee</option>
+                            @foreach (var item in Model.FormHeader)
+                            {
+                                <option value="@item.HId">@item.FormName</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        @Html.TextAreaFor(m => m.Description, new { id = "Description", @class = "form-control", data_bs_toggle = "autosize" })
+                    </div>
+                    <div class="mb-3">
+                        <label for="remarks" class="form-label">Remarks</label>
+                        @Html.TextBoxFor(m => m.Remarks, new { id = "Remarks", @class = "form-control" })
+                    </div>
+                    <div class="mb-3">
+                        <label for="dateFrom" class="form-label">Date From</label>
+                        @Html.TextBoxFor(m => m.DateFrom, new { id = "DateFrom", @class = "form-control date-input", @Value = Model.DateFrom.ToString("MM/dd/yyyy") })
+                    </div>
+                    <div class="mb-3">
+                        <label for="dateTo" class="form-label">Date To</label>
+                        @Html.TextBoxFor(m => m.DateTo, new { id = "DateTo", @class = "form-control date-input", @Value = Model.DateTo.ToString("MM/dd/yyyy") })
+                    </div>
+                    <div class="mb-3">
+                        <label for="deadline" class="form-label">Deadline</label>
+                        @Html.TextBoxFor(m => m.DeadLine, new { id = "DeadLine", @class = "form-control date-input", @Value = Model.DeadLine.ToString("MM/dd/yyyy") })
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@using (Html.BeginForm("DeleteEvalHeader", "Mapping", FormMethod.Post, new { id = "form-delete-header" }))
+{
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                @using (Html.BeginForm("DeleteMapping", "Mapping", FormMethod.Post, new { id = "form-delete-details" }))
+                {
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirm Deletion</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete this mapping?</p>
+                        @* You can include a hidden field for Id if needed *@
+                        @Html.HiddenFor(m => m.EVId)
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+
+}
+
+
+@using (Html.BeginForm("EditEvalHeader", "Mapping", FormMethod.Post, new { id = "form-delete-header" }))
+{
+    <!-- Edit Employee Mapping Modal -->
+    <div class="modal fade" id="editEmployeeModal" tabindex="-1" aria-labelledby="editEmployeeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editEmployeeModalLabel">Edit Employee Mapping</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Hidden ID field -->
+                    @Html.HiddenFor(m => m.EVId, new { id = "EVId" })
+
+                    <div class="mb-3">
+                        <label for="Description" class="form-label">Description</label>
+                        @Html.TextAreaFor(m => m.Description, new { id = "Description", @class = "form-control", data_bs_toggle = "autosize" })
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="Remarks" class="form-label">Remarks</label>
+                        @Html.TextBoxFor(m => m.Remarks, new { id = "Remarks", @class = "form-control" })
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="DateFrom" class="form-label">Date From</label>
+                        @Html.TextBoxFor(m => m.DateFrom, new { id = "DateFrom", @class = "form-control date-input", @Value = Model.DateFrom.ToString("MM/dd/yyyy") })
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="DateTo" class="form-label">Date To</label>
+                        @Html.TextBoxFor(m => m.DateTo, new { id = "DateTo", @class = "form-control date-input", @Value = Model.DateTo.ToString("MM/dd/yyyy") })
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="DeadLine" class="form-label">Deadline</label>
+                        @Html.TextBoxFor(m => m.DeadLine, new { id = "DeadLine", @class = "form-control date-input", @Value = Model.DeadLine.ToString("MM/dd/yyyy") })
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="Acknowledge" class="form-label">Acknowledge By</label>
+                        <select id="AcknowledgeBy" class="form-select" required asp-for="@Model.AcknowledgeBy">
+                            <option value="" disabled selected>Select Employee</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-success">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+@section Scripts
+{
+
+    <script>
+        $(document).ready(function () {
+            $('#deleteModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var evid = button.data('evid');    // Get data-ratee value
+
+                // Set the value in the textbox
+                $(this).find('#EVId').val(evid);
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#editEmployeeModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var evid = button.data('evid');    // Get data-evid value
+                var description = button.data('description'); // Get data-description value
+                var eid = button.data('eid'); // Get data-eid value
+                var empName = button.data('empname'); // Get data-empname value
+                var dateFrom = button.data('datefrom'); // Get data-datefrom value
+                var dateTo = button.data('dateto'); // Get data-dateto value
+                var deadLine = button.data('deadline'); // Get data-deadline value
+                var remarks = button.data('remarks'); // Get data-remarks value
+
+                 var acknowledgeby = button.data('acknowledgeby'); // Get data-remarks value
+
+
+                // Set the values in the modal fields
+                $(this).find('#EVId').val(evid);
+                $(this).find('#Description').val(description);
+                $(this).find('#EId').val(eid);
+                $(this).find('#EmpName').val(empName);
+                $(this).find('#DateFrom').val(dateFrom);
+                $(this).find('#DateTo').val(dateTo);
+                $(this).find('#DeadLine').val(deadLine);
+                $(this).find('#Remarks').val(remarks);
+
+                $(this).find('#AcknowledgeBy').val(acknowledgeby);
+
+
+
+            });
+        });
+    </script>
+
+
+    <script>
+        $(document).on('click', '.edit-btn', function () {
+            var evid = $(this).data('evid'); // Get EId from button
+            var $modal = $('#editEmployeeModal'); // Reference modal
+            var $dropdown = $modal.find('#AcknowledgeBy'); // Scoped dropdown inside modal
+
+            $.ajax({
+                url: '/Mapping/GetHead',
+                type: 'GET',
+                data: { EVId: evid  },
+                success: function (data) {
+                    console.log("AJAX result:", data); // See if result shows
+
+                    $dropdown.empty(); // Clear old options
+                    $dropdown.append('<option value="" disabled selected>Select Employee</option>');
+
+                    if (data && data.length > 0) {
+                        $.each(data, function (i, item) {
+                            $dropdown.append(
+                                '<option value="' + item.eId + '">' + item.empName + '</option>'
+                            );
+                        });
+                    } else {
+                        $dropdown.append('<option value="" disabled>No employees found</option>');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX error:", status, error);
+                    alert('Failed to fetch employees.');
+                }
+            });
+        });
+    </script>
+
+
+
+    
+
+
+}

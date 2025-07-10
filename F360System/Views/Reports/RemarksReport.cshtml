@@ -1,0 +1,144 @@
+﻿@{
+    ViewData["Title"] = "Ratee Page";
+}
+
+@model Reports
+
+<div class="page-header d-print-none">
+    <div class="container-xxl">
+        <div class="row g-2 align-items-center">
+            <div class="col-6">
+                <!-- Page pre-title -->
+                <div class="page-pretitle">
+                    Remarks - Reports
+                    <h2 class="page-title">
+                        Remarks
+                    </h2>
+                </div>
+            </div>
+
+            <div class="col-auto ms-auto d-print-none">
+
+                <!-- Add Button to Open Modal -->
+                @*   <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#questionModal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-bubble-text"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 10h10" /><path d="M9 14h5" /><path d="M12.4 3a5.34 5.34 0 0 1 4.906 3.239a5.333 5.333 0 0 1 -1.195 10.6a4.26 4.26 0 0 1 -5.28 1.863l-3.831 2.298v-3.134a2.668 2.668 0 0 1 -1.795 -3.773a4.8 4.8 0 0 1 2.908 -8.933a5.33 5.33 0 0 1 4.287 -2.16" /></svg>
+                    Add
+                </a> *@
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="page-body">
+    <div class="container-xxl">
+        <div class="card">
+            <div id="table-default">
+                <div class="col- d-lg-flex px-3 pt-3">
+
+                    <div class="d-flex text-center text-lg-start mb-3">
+                        <div class="text-muted">
+                            Show
+                            <div class="mx-2 d-inline-block w-25">
+                                <input id="entries" type="number" class="form-control" value="10" autocomplete="off">
+                            </div>
+                            entries
+                        </div>
+
+                    </div>
+
+                    <div class="input-icon mb-3 ms-auto">
+                        <input type="search" class="search form-control" placeholder="Search">
+                        <span class="input-icon-addon">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
+                        </span>
+
+                    </div>
+                </div>
+
+
+                <hr class="m-0">
+
+                <div class="table-responsive">
+                    <table class="table text-muted table-mobile-sm" id="datatable" data-filename="Category">
+                        <thead class="table-thead">
+                            <tr>
+                                <th>Emplyee ID</th>
+                                <th>Emplyee Name</th>
+                                <th>Self Rating</th>
+                                <th>Head Rating</th>
+                                <th>Peers Rating</th>
+                                <th>Direct Report Rating</th>
+                                <th>Overall Rating</th>
+                            </tr>
+
+                        </thead>
+
+
+
+                        <tbody class="table-tbody">
+
+                            @if (Model.reports == null || !Model.reports.Any())
+                            {
+                                <tr>
+                                    <td colspan="9" class="text-center">NO DATA AVAILABLE</td>
+                                </tr>
+                            }
+
+                            @foreach (var row in Model.reports)
+                            {
+                                <tr>
+
+                                    <td data-label="Evaluation ID" class="text-nowrap sort-evid">
+                                        <a class="text-decoration-none theme-text">@row.RateeId</a>
+                                    </td>
+
+                                    <td data-label="Ratee Name" class="text-nowrap sort-ratee">
+                                        <a class="text-decoration-none theme-text">@row.RateeName</a>
+                                    </td>
+
+                                    <td data-label="Relation" class="text-nowrap sort-relation">
+                                        <a class="text-decoration-none theme-text">@row.Self</a>
+                                    </td>
+
+                                    <td data-label="Rater Name" class="text-nowrap sort-name">
+                                        <a class="text-decoration-none theme-text">@row.Head</a>
+                                    </td>
+
+                                    <td data-label="Date From" class="text-nowrap sort-datefrom">
+                                        <a class="text-decoration-none theme-text">@row.Peers</a>
+                                    </td>
+
+                                    <td data-label="Date To" class="text-nowrap sort-dateto">
+                                        <a class="text-decoration-none theme-text">@row.DirectReport</a>
+                                    </td>
+
+                                    <td data-label="Deadline" class="text-nowrap sort-deadline">
+                                        <a class="text-decoration-none theme-text">@row.Overall</a>
+                                    </td>
+
+                                </tr>
+                            }
+
+
+
+
+                        </tbody>
+                    </table>
+
+
+                </div>
+
+                <div class="card-footer d-flex align-items-center">
+                    <ul class="pagination m-0 ms-auto"></ul>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
