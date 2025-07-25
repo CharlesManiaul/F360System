@@ -1,0 +1,170 @@
+﻿@{
+    ViewData["Title"] = "Mapping Page";
+}
+
+
+@model Reports
+
+<div class="page-header d-print-none">
+    <div class="container-xxl">
+        <div class="row g-2 align-items-center">
+            <div class="col-6">
+                <!-- Page pre-title -->
+                <div class="page-pretitle">
+                    Index - Mapping
+                    <h2 class="page-title">
+                        Mapping Employees
+                    </h2>
+                </div>
+            </div>
+
+            <div class="col-auto ms-auto d-print-none">
+
+           
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<div class="page-body">
+    <div class="container-xxl ">
+        <div class="card">
+            <div id="table-default">
+                <div class="col- d-lg-flex px-3 pt-3">
+
+                    <div class="d-flex text-center text-lg-start mb-3">
+                        <div class="text-muted">
+                            Show
+                            <div class="mx-2 d-inline-block w-25">
+                                <input id="entries" type="number" class="form-control" value="10" autocomplete="off">
+                            </div>
+                            entries
+                        </div>
+
+                    </div>
+
+                    <div class="input-icon mb-3 ms-auto">
+                        <input type="search" class="search form-control" placeholder="Search">
+                        <span class="input-icon-addon">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
+                        </span>
+                    </div>
+                </div>
+                <hr class="m-0">
+
+                <div class="table-responsive">
+                    <table class="table text-muted table-mobile-sm" id="datatable" data-filename="Category">
+                        <thead class="table-thead">
+                            <tr>
+                                <th><button class="table-sort" data-sort="sort-evid">Evaluation ID</button></th>
+                                <th><button class="table-sort" data-sort="sort-description">Description</button></th>
+                                <th><button class="table-sort" data-sort="sort-eid">Employee ID</button></th>
+                                <th><button class="table-sort" data-sort="sort-empname">Employee Name</button></th>
+                                <th><button class="table-sort" data-sort="sort-datefrom">Date From</button></th>
+                                <th><button class="table-sort" data-sort="sort-dateto">Date To</button></th>
+                                <th><button class="table-sort" data-sort="sort-deadline">Deadline</button></th>
+                                <th><button class="table-sort" data-sort="sort-remarks">Remarks</button></th>
+                                <th><button class="table-sort" data-sort="sort-ack">Acknowledge By</button></th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody class="table-tbody">
+                            @if (Model.map == null || !Model.map.Any())
+                            {
+                                <tr>
+                                    <td colspan="9" class="text-center">NO DATA AVAILABLE</td>
+                                </tr>
+                            }
+                            @foreach (var row in Model.map)
+                            {
+                                <tr>
+
+
+                                    <td data-label="Evaluation ID" class="text-nowrap sort-evid">
+                                        <a href="/Report/MappingReportDetails/@row.EVId" class="text-decoration-none theme-text">@row.EVId</a>
+                                    </td>
+                                    <td data-label="Description" class="text-nowrap sort-description">
+                                        <a href="/Report/MappingReportDetails/@row.EVId" class="text-decoration-none theme-text">@row.Description</a>
+                                    </td>
+
+                                    <td data-label="Employee ID" class="text-nowrap sort-eid">
+                                        <a href="/Report/MappingReportDetails/@row.EVId" class="text-decoration-none theme-text">@row.EId</a>
+                                    </td>
+                                    <td data-label="Employee Name" class="text-nowrap sort-empname">
+                                        <a href="/Report/MappingReportDetails/@row.EVId" class="text-decoration-none theme-text">@row.EmpName</a>
+                                    </td>
+                                    <td data-label="Date From" class="text-nowrap sort-datefrom">
+                                        <a href="/Report/MappingReportDetails/@row.EVId" class="text-decoration-none theme-text">
+                                            @row.DateFrom.ToString("MM/dd/yyyy")
+                                        </a>
+                                    </td>
+                                    <td data-label="Date To" class="text-nowrap sort-dateto">
+                                        <a href="/Report/MappingReportDetails/@row.EVId" class="text-decoration-none theme-text">
+                                            @row.DateTo.ToString("MM/dd/yyyy")
+                                        </a>
+                                    </td>
+
+                                    <td data-label="Deadline" class="text-nowrap sort-deadline">
+                                        <a href="/Report/MappingReportDetails/@row.EVId" class="text-decoration-none theme-text">
+                                            @row.DeadLine.ToString("MM/dd/yyyy")
+                                        </a>
+                                    </td>
+
+                                    <td data-label="Remarks" class="text-nowrap sort-remarks">
+                                        <a href="/Report/MappingReportDetails/@row.EVId" class="text-decoration-none theme-text">@row.Remarks</a>
+                                    </td>
+
+                                    <td data-label="Acknowledge by" class="text-nowrap sort-ack">
+                                        <a href="/Report/MappingReportDetails/@row.EVId" class="text-decoration-none theme-text">@row.AcknowledgeName</a>
+                                    </td>
+
+
+
+                                  
+
+
+
+
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-footer d-flex align-items-center">
+                    <ul class="pagination m-0 ms-auto"></ul>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+@section Scripts
+{
+
+  
+   
+
+
+   
+
+
+
+
+}

@@ -182,13 +182,13 @@ namespace F360System.Controllers
             {
                 TempData["Success Title"] = "Successfully Deleted from Mapping Header";
                 TempData["Success Message"] = "Map has been Deleted.";
-                return RedirectToAction("Details", new { mapping.EVId });
+                return RedirectToAction("Index");
 
             }
 
             TempData["Error Title"] = "Deletion of Mapping failed";
             TempData["Error Message"] = response.ToString();
-            return RedirectToAction("Details", new { mapping.EVId });
+            return RedirectToAction("Index");
 
         }
 

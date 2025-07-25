@@ -44,8 +44,8 @@ namespace F360System.Controllers
 
 
             if (username == "09930" || username == "07826" || username == "11942")
-            { 
-                    reports.reports = db.Query<Reports>(@"SELECT 
+            {
+                reports.reports = db.Query<Reports>(@"SELECT 
                                                     a.*, 
                                                     b.name AS EmpName, 
                                                     c.DateFrom,
@@ -68,12 +68,12 @@ namespace F360System.Controllers
                                                 
                                                     ORDER BY AnswerDate
                                                     ");
-                }
+            }
 
-                else 
-                {
+            else
+            {
 
-                    reports.reports = db.Query<Reports>(@"SELECT 
+                reports.reports = db.Query<Reports>(@"SELECT 
                                                     a.*, 
                                                     b.name AS EmpName, 
                                                     c.DateFrom,
@@ -96,8 +96,8 @@ namespace F360System.Controllers
                                                     WHERE d.RateeId = @username
                                                     ORDER BY AnswerDate
                                                     ", new { username });
-                }
-                
+            }
+
 
             return View(reports);
         }
@@ -132,7 +132,7 @@ namespace F360System.Controllers
                                                 JOIN employee_master c ON a.AcknowledgeBy = c.EID
                                                     ");
             }
-            else 
+            else
             {
 
                 reports.reports = db.Query<Reports>(@"
@@ -327,13 +327,45 @@ namespace F360System.Controllers
                                                 where a.AcknowledgeBy IS NOT NULL");
 
             return View(reports);
-        
+
+        }
+
+
+
+        public IActionResult MappingReport()
+        {
+            string sql;
+            Reports reports = new Reports();
+            var eid = HttpContext.User.FindFirstValue("eid");
+            reports.map = db.Query<Mapping>("sp_360_Mapping_Report", new {eid });
+
+            return View(reports);
+
+        }
+
+
+
+        [Route("/Report/MappingReportDetails/{EVId}")]
+        public IActionResult MappingReportDetails(int EVId)
+        {
+            string sql;
+            Reports reports = new Reports();
+
+            reports = db.QueryFirst<Reports>("sp_360_EvalHeader_Select", new { EVId });
+
+            reports.mapDetails = db.Query<MapDetails>(@"Select a.EvID, a.Relation,a.EvID,b.name as RateeName, a.RateeID Ratee from F360_EvalMapping a
+                                                        JOIN employee_master b
+                                                        on a.RateeID = b.eid
+                                                        where EVId = @EVId", new { EVId });
+
+            return View(reports);
+
         }
 
 
 
 
 
-    
+
     }
 }

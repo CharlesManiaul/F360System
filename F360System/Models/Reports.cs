@@ -38,5 +38,9 @@
 
         public IEnumerable<Reports> reports { get; set; }
 
+        public IEnumerable<MapDetails> mapDetails { get; set; }
+
+        public IEnumerable<Mapping> map { get; set; }
+
     }
 }

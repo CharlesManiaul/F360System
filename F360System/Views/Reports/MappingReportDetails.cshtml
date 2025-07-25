@@ -1,0 +1,90 @@
+﻿@{
+    ViewData["Title"] = "Report Mapping Page";
+}
+
+
+@model Reports
+
+<div class="page-header d-print-none">
+    <div class="container-xxl">
+        <div class="row g-2 align-items-center">
+            <div class="col-6">
+                <!-- Page pre-title -->
+                <div class="page-pretitle">
+                    Details - Mapping
+                    <h2 class="page-title">
+                        Details of Mapped Employees
+                    </h2>
+                </div>
+            </div>
+
+            <div class="col-auto ms-auto d-print-none">
+
+                
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<div class="page-body">
+    <div class="container-xxl">
+
+        <div class="card">
+            <div class="card-header d-block">
+                <h2 class="card-title">@Model.EmpName </h2>
+                <div>@Model.EId</div>
+
+            </div>
+            <div class="table-responsive">
+                <table class="table text-muted table-mobile-sm" id="datatable" data-filename="Category">
+                    <thead class="table-thead">
+                        <tr>
+
+                            <th>Relation</th>
+                            <th>Ratee</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody class="table-tbody">
+                        @if (Model.mapDetails == null || !Model.mapDetails.Any())
+                        {
+                            <tr>
+                                <td colspan="3" class="text-center">NO DATA AVAILABLE</td>
+                            </tr>
+                        }
+                        @foreach (var row in Model.mapDetails)
+                        {
+                            <tr>
+                                @* add edit-details in class for modal*@
+                                <td data-label="Relation">
+                                    @row.Relation
+                                </td>
+                                @* add edit-details in class for modal*@
+                                <td data-label="Ratee">
+                                    @row.RateeName
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-footer d-flex align-items-center">
+                <ul class="pagination m-0 ms-auto"></ul>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+
+
